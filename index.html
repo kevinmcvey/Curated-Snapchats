@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Curated Snapchats</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="rootContainer">
+            <div class="contentContainer" id="cc_1">
+                <video height="100%" id="vid_1" loop>
+                    <source src="/Users/kevinmcvey/Pictures/Phone/Snapchat-5636841146076159783.mp4" type="video/mp4">
+                    Your browser does not support videos. :(
+                </video>
+            </div>
+            <div class="contentContainer" id="cc_2">
+                <video height="100%" id="vid_2" autoplay loop>
+                    <source src="/Users/kevinmcvey/Pictures/Phone/Snapchat-1676208309905769291.mp4" type="video/mp4">
+                    Your browser does not support videos. :(
+                </video>
+            </div>
+        </div>
+    </body>
+    <script>
+        window.onload = function windowOnload() {
+            $("#cc_1").hide();
+        };
+
+        window.onresize = function windowOnresize() {
+            var cc1 = $("#cc_1"),
+                cc2 = $("#cc_2");
+
+            if (cc1.is(":visible")) {
+                cc2.show();
+                cc1.hide();
+                cc2.hide();
+                cc1.show();
+            } else {
+                cc1.show();
+                cc2.hide();
+                cc1.hide();
+                cc2.show();
+            }
+        }
+
+        function swap() {
+            var cc1 = $("#cc_1"),
+               vid1 = $("#vid_1"),
+                cc2 = $("#cc_2"),
+               vid2 = $("#vid_2");
+
+            if (cc1.is(":visible")) {
+                vid2.get(0).play();
+                cc2.show();
+                cc1.hide();
+                vid1.get(0).pause();
+            } else {
+                vid1.get(0).play();
+                cc1.show();
+                cc2.hide();
+                vid2.get(0).pause();
+            }
+        }
+/*
+        causeRepaintsOn = $("#rootContainer, #cc_1, #cc_2");
+
+        $(window).resize(function() {
+            causeRepaintsOn.css("z-index", 1);
+        });
+*/
+    </script>
+</html>
