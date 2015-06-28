@@ -4,9 +4,13 @@
         <title>Curated Snapchats</title>
         <link rel="stylesheet" type="text/css" href="style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="src/Display.js"></script>
+        <script src="src/MediaMetadata.js"></script>
+        <script src="src/Buffer.js"></script>
     </head>
     <body>
         <div id="rootContainer">
+            <!--
             <div class="contentContainer" id="cc_1">
                 <video height="100%" id="vid_1" loop>
                     <source src="/Users/kevinmcvey/Pictures/Phone/Snapchat-5636841146076159783.mp4" type="video/mp4">
@@ -19,9 +23,13 @@
                     Your browser does not support videos. :(
                 </video>
             </div>
+            -->
         </div>
     </body>
     <script>
+        var display = new Display();
+        display.allMedia = mediaMetadata;
+/*
         window.onload = function windowOnload() {
             $("#cc_1").hide();
         };
@@ -61,6 +69,7 @@
                 vid2.get(0).pause();
             }
         }
+*/
 /*
         causeRepaintsOn = $("#rootContainer, #cc_1, #cc_2");
 

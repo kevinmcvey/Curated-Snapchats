@@ -5,6 +5,10 @@ body {
     background-color: #4a4a4a;
 }
 
+video {
+    height: 100%;
+}
+
 #rootContainer {
     height: 100%;
     width: 100%;
@@ -19,7 +23,7 @@ body {
     text-align: center;
 }
 
-.contentContainer {
+.contentBuffer {
     display: inline-block;
     height: 100%;
     vertical-align: top;
