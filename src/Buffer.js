@@ -109,4 +109,3 @@ Buffer.prototype = {
     pause: function() {
     }
 }
-
