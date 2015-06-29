@@ -9,12 +9,15 @@ Display.prototype = {
 
     DEFAULT_BUFFER_INDEX: 0,
     REDRAW_DELAY_MS: 50,
+    S_TO_MS: 1000,
 
     buffers: [],
     liveBufferIndex: undefined,
     lastBufferIndex: undefined,
 
     allMedia: [],
+
+    rotationTimeoutId: undefined,
 
     addNewBuffersToParentDiv: function(bufferCount, parentDivId) {
         for (var i = 0; i < bufferCount; i++) {
@@ -48,6 +51,23 @@ Display.prototype = {
     },
 
     rotateLiveBuffer: function() {
+        if (this.liveBufferIndex == undefined ) {
+            console.error("Live buffer is undefined");
+            return;
+        }
+
+        var nextBufferIndex = this.liveBufferIndex + 1;
+        if (nextBufferIndex == this.buffers.length)
+            nextBufferIndex = 0;
+
+        // TODO: Pause
+        this.buffers[this.liveBufferIndex].hide();
+        this.buffers[nextBufferIndex].show();
+
+        this.lastBufferIndex = this.liveBufferIndex;
+        this.liveBufferIndex = nextBufferIndex;
+
+        this.play();
     },
 
     /* Redrawing the live buffer (on window resize, for instance) is a little tricky.
@@ -74,68 +94,25 @@ Display.prototype = {
         if (this.lastBufferIndex != undefined)
             this.buffers[this.lastBufferIndex].hide(); //TODO: Stop
 
-        this.buffers[this.liveBufferIndex].show(); // TODO: Play
+        this.buffers[this.liveBufferIndex].show();
+
+        // Schedule rotation and the next play event
+        _this = this;
+        this.rotationTimeoutId =
+                setTimeout(function rotateAfterDuration() {
+                _this.rotateLiveBuffer();
+            },
+            this.buffers[this.liveBufferIndex].duration * this.S_TO_MS);
     },
 
     pause: function() {
+        if (this.rotationTimeoutId == undefined)
+            return;
+
+        clearTimeout(this.rotationTimeoutId);
     },
 
     getRandomMedia: function() {
         return this.allMedia[Math.floor(Math.random() * this.allMedia.length)];
     }
-
-
-
-    /*
-    mediaMetadata: [],
-
-    createWindowBuffers: function(buffers) {
-        if (buffers <= 0)
-            return;
-
-        this.bufferCount = buffers;
-
-        $("body").append('<div id="rootContainer"/>');
-
-        for (var buffer = 0; buffer < this.bufferCount; buffer++) {
-            var bufferId = this.BUFFER_ID_PREFIX + buffer;
-            var imageId = this.IMAGE_ID_PREFIX + buffer;
-            var videoId = this.VIDEO_ID_PREFIX + buffer;
-
-            $("#rootContainer").append('<div class="contentBuffer" id="' + bufferId +'" />');
-            $("#" + bufferId).append('<img src="" id="' + imageId + '" />');
-            $("#" + bufferId).append('<video id="' + videoId + '" loop />');
-
-            $("#" + bufferId).hide();
-        }
-
-        this.currentBuffer = buffers - 1;
-    },
-
-    populateAllBuffersWithRandomMedia: function() {
-        for (var buffer = 0; buffer < this.bufferCount; buffer++) {
-            this.populateBufferWithRandomMedia(buffer);
-        }
-    },
-
-    populateBufferWithRandomMedia: function(buffer) {
-        var mediaIndex = Math.floor(Math.random() * this.mediaMetadata.length);
-        this.populateBuffer(buffer, this.mediaMetadata[mediaIndex]);
-    },
-
-    populateBuffer: function(buffer, media) {
-        var bufferId = this.BUFFER_ID_PREFIX + buffer;
-        var imageId = this.IMAGE_ID_PREFIX + buffer;
-        var videoId = this.VIDEO_ID_PREFIX + buffer;
-
-        if (media.type == "video") {
-            $("#" + videoId).append('<source id="butts" src="' + media.source + '" type="' + this.VIDEO_TYPE + '">');
-            $("#" + videoId).append(this.VIDEO_ERROR_MESSAGE);
-        }
-    },
-
-    rotateBuffers: function() {
-        // Gonna have to restructure this whole thing. That's fine.
-    }
-    */
 }
