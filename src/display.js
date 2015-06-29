@@ -91,10 +91,13 @@ Display.prototype = {
         if (this.liveBufferIndex == undefined)
             this.liveBufferIndex = this.DEFAULT_BUFFER_INDEX;
 
-        if (this.lastBufferIndex != undefined)
+        if (this.lastBufferIndex != undefined) {
             this.buffers[this.lastBufferIndex].hide(); //TODO: Stop
+            this.buffers[this.lastBufferIndex].pause();
+        }
 
         this.buffers[this.liveBufferIndex].show();
+        this.buffers[this.liveBufferIndex].play();
 
         // Schedule rotation and the next play event
         _this = this;

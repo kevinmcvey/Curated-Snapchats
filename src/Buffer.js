@@ -104,8 +104,12 @@ Buffer.prototype = {
     },
 
     play: function() {
+        if (this.type == this.TYPE_VIDEO)
+            $("#" + this.videoId).get(0).play();
     },
 
     pause: function() {
+        if (this.type == this.TYPE_VIDEO)
+            $("#" + this.videoId).get(0).pause();
     }
 }
