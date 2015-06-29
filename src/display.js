@@ -7,6 +7,8 @@ function Display() {
 
 Display.prototype = {
 
+    DEFAULT_BUFFER_INDEX: 0,
+
     buffers: [],
     liveBufferIndex: undefined,
     lastBufferIndex: undefined,
@@ -22,25 +24,46 @@ Display.prototype = {
     addNewBufferToParentDiv: function(parentDivId) {
         var newBuffer = new Buffer();
         newBuffer.createWithIdAsChildOf(this.buffers.length, parentDivId);
-        buffers.push(newBuffer);
+        this.buffers.push(newBuffer);
     },
 
     populateAllBuffersWithRandomMedia: function() {
+        for (var buffer = 0; buffer < this.buffers.length; buffer++) {
+            this.buffers[buffer].populateWithMedia(this.getRandomMedia());
+        }
     },
 
-    populateLastBufferWithRandomMedia: function(media) {
+    populateLastBufferWithRandomMedia: function() {
+        this.populateLastBufferWithMedia(this.getRandomMedia());
     },
 
     populateLastBufferWithMedia: function(media) {
+        if (this.lastBufferIndex == undefined) {
+            console.error("Last Buffer is undefined");
+            return;
+        }
+
+        this.buffers[this.lastBufferIndex].populateWithMedia(media);
     },
 
     rotateLiveBuffer: function() {
     },
 
     play: function() {
+        if (this.liveBufferIndex == undefined)
+            this.liveBufferIndex = this.DEFAULT_BUFFER_INDEX;
+
+        if (this.lastBufferIndex != undefined)
+            this.buffers[this.lastBufferIndex].hide(); //TODO: Stop
+
+        this.buffers[this.liveBufferIndex].show(); // TODO: Play
     },
 
     pause: function() {
+    },
+
+    getRandomMedia: function() {
+        return this.allMedia[Math.floor(Math.random() * this.allMedia.length)];
     }
 
 

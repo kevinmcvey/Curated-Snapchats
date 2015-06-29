@@ -58,6 +58,9 @@ Buffer.prototype = {
         $("#" + this.videoId).append(this.VIDEO_ERROR_MESSAGE);
 
         this.type = this.TYPE_UNUSED;
+
+        $("#" + this.videoId).hide();
+        $("#" + this.imageId).hide();
         $("#" + this.id).hide();
     },
 
@@ -84,9 +87,19 @@ Buffer.prototype = {
 
     show: function() {
         $("#" + this.id).show();
+
+        if (this.type == this.TYPE_VIDEO)
+            $("#" + this.videoId).show();
+        else if (this.type == this.TYPE_IMAGE)
+            $("#" + this.imageId).show();
     },
 
     hide: function() {
+        if (this.type == this.TYPE_VIDEO)
+            $("#" + this.videoId).hide();
+        else if (this.type == this.TYPE_IMAGE)
+            $("#" + this.imageId).hide();
+
         $("#" + this.id).hide();
     },
 

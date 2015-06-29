@@ -29,6 +29,9 @@
     <script>
         var display = new Display();
         display.allMedia = mediaMetadata;
+        display.addNewBuffersToParentDiv(3, "rootContainer");
+        display.populateAllBuffersWithRandomMedia();
+        display.play();
 /*
         window.onload = function windowOnload() {
             $("#cc_1").hide();
