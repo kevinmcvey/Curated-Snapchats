@@ -8,6 +8,7 @@ function Display() {
 Display.prototype = {
 
     DEFAULT_BUFFER_INDEX: 0,
+    REDRAW_DELAY_MS: 50,
 
     buffers: [],
     liveBufferIndex: undefined,
@@ -39,7 +40,7 @@ Display.prototype = {
 
     populateLastBufferWithMedia: function(media) {
         if (this.lastBufferIndex == undefined) {
-            console.error("Last Buffer is undefined");
+            console.error("Last buffer is undefined");
             return;
         }
 
@@ -47,6 +48,23 @@ Display.prototype = {
     },
 
     rotateLiveBuffer: function() {
+    },
+
+    /* Redrawing the live buffer (on window resize, for instance) is a little tricky.
+       The hide and show events will clash if executed too quickly. Thus a timeout
+       is used to artificially slow the process down ever so slightly. */
+    redrawLiveBuffer: function() {
+        if (this.liveBufferIndex == undefined) {
+            console.error("Live buffer is undefined");
+            return;
+        }
+
+        this.buffers[this.liveBufferIndex].hide();
+
+        var _this = this;
+        setTimeout(function showLiveBuffer() {
+            _this.buffers[_this.liveBufferIndex].show();
+        }, this.REDRAW_DELAY_MS);
     },
 
     play: function() {
