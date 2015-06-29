@@ -49,7 +49,7 @@ Buffer.prototype = {
         this.videoId = this.VIDEO_ID_PREFIX + id;
 
         // Create the buffer's containing div, its image element, and its video element
-        $("#" + parentDivId).append('<div class"contentBuffer" id="' + this.id + '" />');
+        $("#" + parentDivId).append('<div class="contentBuffer" id="' + this.id + '" />');
         $("#" + this.id).append('<img src="" id="' + this.imageId + '" />');
         $("#" + this.id).append('<video id="' + this.videoId + '" loop />');
 
