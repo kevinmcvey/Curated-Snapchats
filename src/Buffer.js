@@ -9,6 +9,7 @@ Buffer.prototype = {
 
     IMAGE_ID_PREFIX: "image_",
     VIDEO_ID_PREFIX: "video_",
+    TIMER_ID_PREFIX: "timer_",
 
     TYPE_UNUSED: "unused",
     TYPE_IMAGE: "image",
@@ -20,6 +21,7 @@ Buffer.prototype = {
     id: "",
     imageId: "",
     videoId: "",
+    timerId: "",
 
     type: "",
 
@@ -47,11 +49,13 @@ Buffer.prototype = {
         this.id = id;
         this.imageId = this.IMAGE_ID_PREFIX + id;
         this.videoId = this.VIDEO_ID_PREFIX + id;
+        this.timerId = this.TIMER_ID_PREFIX + id;
 
         // Create the buffer's containing div, its image element, and its video element
         $("#" + parentDivId).append('<div class="contentBuffer" id="' + this.id + '" />');
         $("#" + this.id).append('<img src="" id="' + this.imageId + '" />');
         $("#" + this.id).append('<video id="' + this.videoId + '" loop />');
+        $("#" + this.id).append('<div class="timer" id="' + this.timerId + '" />');
 
         // Pre-populate the div's video element with a hot-swappable <source> object
         $("#" + this.videoId).append('<source src="" type="' + this.VIDEO_FILE_TYPE + '" >');
@@ -83,6 +87,7 @@ Buffer.prototype = {
         }
 
         this.duration = media.duration;
+        this.setTimerDuration(this.duration);
     },
 
     show: function() {
@@ -111,5 +116,27 @@ Buffer.prototype = {
     pause: function() {
         if (this.type == this.TYPE_VIDEO)
             $("#" + this.videoId).get(0).pause();
+    },
+
+    // CSS3 animation is used to operate the timer visual
+    setTimerDuration: function(duration) {
+        $("#" + this.timerId).css({
+            "-webkit-transition": "width " + duration + "s, -webkit-transform",
+            "transition": "width " + duration + "s, transform " + duration + "s"
+        });
+    },
+
+    startTimer: function() {
+        $("#" + this.timerId).css({
+            "width": "0px"
+        });
+    },
+
+    resetTimer: function() {
+        $("#" + this.timerId).css({
+            "-webkit-transition": "width 0s, -webkit-transform",
+            "transition": "width 0s, transform 0s",
+            "width": "100%"
+        });
     }
 }

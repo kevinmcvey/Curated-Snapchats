@@ -60,8 +60,9 @@ Display.prototype = {
         if (nextBufferIndex == this.buffers.length)
             nextBufferIndex = 0;
 
-        // TODO: Pause
         this.buffers[this.liveBufferIndex].hide();
+        this.buffers[this.liveBufferIndex].pause();
+        this.buffers[this.liveBufferIndex].resetTimer();
         this.buffers[nextBufferIndex].show();
 
         this.lastBufferIndex = this.liveBufferIndex;
@@ -92,20 +93,28 @@ Display.prototype = {
             this.liveBufferIndex = this.DEFAULT_BUFFER_INDEX;
 
         if (this.lastBufferIndex != undefined) {
-            this.buffers[this.lastBufferIndex].hide(); //TODO: Stop
+            this.buffers[this.lastBufferIndex].hide();
             this.buffers[this.lastBufferIndex].pause();
         }
 
-        this.buffers[this.liveBufferIndex].show();
-        this.buffers[this.liveBufferIndex].play();
+        var liveBuffer = this.buffers[this.liveBufferIndex];
+
+        liveBuffer.show();
+        liveBuffer.play();
+        liveBuffer.setTimerDuration(liveBuffer.duration);
+
+        // Give the CSS a moment to propagate
+        setTimeout(function startTimerAfterDuration() {
+            liveBuffer.startTimer();
+        }, 50);
 
         // Schedule rotation and the next play event
         var _this = this;
         this.rotationTimeoutId =
-                setTimeout(function rotateAfterDuration() {
-                _this.rotateLiveBuffer();
-            },
-            this.buffers[this.liveBufferIndex].duration * this.S_TO_MS);
+            setTimeout(function rotateAfterDuration() {
+                    _this.rotateLiveBuffer();
+                },
+                this.buffers[this.liveBufferIndex].duration * this.S_TO_MS);
     },
 
     pause: function() {
