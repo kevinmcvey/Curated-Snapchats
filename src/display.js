@@ -113,6 +113,8 @@ Display.prototype = {
             return;
 
         clearTimeout(this.rotationTimeoutId);
+
+        this.buffers[this.liveBufferIndex].pause();
     },
 
     getRandomMedia: function() {
