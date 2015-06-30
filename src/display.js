@@ -100,7 +100,7 @@ Display.prototype = {
         this.buffers[this.liveBufferIndex].play();
 
         // Schedule rotation and the next play event
-        _this = this;
+        var _this = this;
         this.rotationTimeoutId =
                 setTimeout(function rotateAfterDuration() {
                 _this.rotateLiveBuffer();
