@@ -113,6 +113,9 @@ Display.prototype = {
         this.rotationTimeoutId =
             setTimeout(function rotateAfterDuration() {
                     _this.rotateLiveBuffer();
+
+                    // Populate with new media
+                    liveBuffer.populateWithMedia(_this.getRandomMedia());
                 },
                 this.buffers[this.liveBufferIndex].duration * this.S_TO_MS);
     },
