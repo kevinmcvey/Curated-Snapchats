@@ -107,8 +107,10 @@ Buffer.prototype = {
     },
 
     play: function() {
-        if (this.type == this.TYPE_VIDEO)
+        if (this.type == this.TYPE_VIDEO) {
             $("#" + this.videoId).get(0).play();
+            $("#" + this.videoId).get(0).currentTime = 0;
+        }
     },
 
     pause: function() {
