@@ -7,6 +7,7 @@
         <script src="src/Display.js"></script>
         <script src="src/MediaMetadata.js"></script>
         <script src="src/Buffer.js"></script>
+        <script src="src/CircularArray.js"></script>
     </head>
     <body>
         <div id="rootContainer"></div>
@@ -14,6 +15,7 @@
     <script>
         var display = new Display();
         display.allMedia = mediaMetadata;
+        display.recentMediaIndices = new CircularArray(20);
         display.addNewBuffersToParentDiv(2, "rootContainer");
         display.populateAllBuffersWithRandomMedia();
         display.play();

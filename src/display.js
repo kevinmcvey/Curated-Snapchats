@@ -16,6 +16,7 @@ Display.prototype = {
     lastBufferIndex: undefined,
 
     allMedia: [],
+    recentMediaIndices: undefined,
 
     rotationTimeoutId: undefined,
 
@@ -130,6 +131,16 @@ Display.prototype = {
     },
 
     getRandomMedia: function() {
-        return this.allMedia[Math.floor(Math.random() * this.allMedia.length)];
+        var validIndices = [];
+        for (var mediaIndex = 0; mediaIndex < this.allMedia.length; mediaIndex++) {
+            if (! this.recentMediaIndices.contains(mediaIndex)) {
+                validIndices.push(mediaIndex);
+            }
+        }
+
+        var randomUnusedIndex = validIndices[Math.floor(Math.random() * validIndices.length)];
+        this.recentMediaIndices.add(randomUnusedIndex);
+
+        return this.allMedia[randomUnusedIndex];
     }
 }
