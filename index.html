@@ -13,7 +13,14 @@
     <body>
         <div id="rootContainer"></div>
         <div id="timerDiv" class="timer"></div>
-        <div id="aboutButton" class="button">?</div>
+        <div id="aboutButton" class="button thickBorder" onclick="toggleAbout()">
+            <div id="buttonInterior" class="interior">
+                ?
+            </div>
+        </div>
+        <div id="aboutContainer" class="initializeHidden thickBorder">
+            asdf
+        </div>
     </body>
     <script>
         var display = new Display();
@@ -26,6 +33,11 @@
 
         window.onresize = function windowOnResize() {
             display.redrawLiveBuffer();
+        }
+
+        function toggleAbout() {
+            $("#aboutContainer").toggle();
+            display.toggle();
         }
     </script>
 </html>

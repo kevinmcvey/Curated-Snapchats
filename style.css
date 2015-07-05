@@ -1,3 +1,9 @@
+@import url(http://fonts.googleapis.com/css?family=Abel:400);
+
+html {
+    height: 100%;
+}
+
 body {
     width: 100%;
     height: 100%;
@@ -54,23 +60,63 @@ img {
 
 .button {
     position: absolute;
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
     bottom: 6px;
     right: 6px;
 
     margin: 0px;
 
-    opacity: 0.5;
+    opacity: 0.7;
 
     z-index: 3;
-    background-color: #606060;
+    background-color: #fff;
 
+    /*
     -moz-box-shadow: 0 0 7px #000;
     -webkit-box-shadow: 0 0 7px #000;
     box-shadow: 0px 0px 7px #000;
+    */
+
+    font-family: 'Abel', sans-serif;
+    font-weight: 900;
+    font-size: 12pt;
+    color: #000;
 }
 
 .button:hover {
     opacity: 1.0;
+}
+
+.interior {
+    position: relative;
+
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+    text-align: center;
+}
+
+#aboutContainer {
+    position: relative;
+    top: -5px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 30%;
+    min-width: 350px;
+
+    height: 100%;
+
+    background-color: #fff;
+}
+
+.thickBorder {
+    border: 4px solid #000;
+}
+
+.initializeHidden {
+    display: none;
 }

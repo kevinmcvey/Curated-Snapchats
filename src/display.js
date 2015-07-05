@@ -7,6 +7,9 @@ function Display() {
 
 Display.prototype = {
 
+    STATE_PLAYING: "PLAYING",
+    STATE_PAUSED: "PAUSED",
+
     DEFAULT_BUFFER_INDEX: 0,
     REDRAW_DELAY_MS: 50,
     S_TO_MS: 1000,
@@ -20,6 +23,7 @@ Display.prototype = {
 
     rotationTimeoutId: undefined,
     timer: undefined,
+    state: "",
 
     addNewBuffersToParentDiv: function(bufferCount, parentDivId) {
         for (var i = 0; i < bufferCount; i++) {
@@ -93,6 +97,8 @@ Display.prototype = {
     },
 
     play: function() {
+        this.state = this.STATE_PLAYING;
+
         if (this.liveBufferIndex == undefined)
             this.liveBufferIndex = this.DEFAULT_BUFFER_INDEX;
 
@@ -126,12 +132,23 @@ Display.prototype = {
     },
 
     pause: function() {
+        this.state = this.STATE_PAUSED;
+
         if (this.rotationTimeoutId == undefined)
             return;
 
         clearTimeout(this.rotationTimeoutId);
 
         this.buffers[this.liveBufferIndex].pause();
+    },
+
+    toggle: function() {
+        if (this.state === this.STATE_PAUSED) {
+            this.play();
+        } else if (this.state === this.STATE_PLAYING) {
+            this.pause();
+            this.timer.resetTimer();
+        }
     },
 
     getRandomMedia: function() {
