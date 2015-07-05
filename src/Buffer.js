@@ -54,7 +54,7 @@ Buffer.prototype = {
         // Create the buffer's containing div, its image element, and its video element
         $("#" + parentDivId).append('<div class="contentBuffer" id="' + this.id + '" />');
         $("#" + this.id).append('<img src="" id="' + this.imageId + '" />');
-        $("#" + this.id).append('<video id="' + this.videoId + '" loop />');
+        $("#" + this.id).append('<video id="' + this.videoId + '" />');
         $("#" + this.id).append('<div class="timer" id="' + this.timerId + '" />');
 
         // Pre-populate the div's video element with a hot-swappable <source> object
