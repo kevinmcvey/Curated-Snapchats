@@ -19,6 +19,7 @@ Display.prototype = {
     recentMediaIndices: undefined,
 
     rotationTimeoutId: undefined,
+    timer: undefined,
 
     addNewBuffersToParentDiv: function(bufferCount, parentDivId) {
         for (var i = 0; i < bufferCount; i++) {
@@ -34,7 +35,9 @@ Display.prototype = {
 
     populateAllBuffersWithRandomMedia: function() {
         for (var buffer = 0; buffer < this.buffers.length; buffer++) {
-            this.buffers[buffer].populateWithMedia(this.getRandomMedia());
+            var newMedia = this.getRandomMedia();
+            this.buffers[buffer].populateWithMedia(newMedia);
+            this.timer.setTimerDuration(newMedia.duration);
         }
     },
 
@@ -63,7 +66,7 @@ Display.prototype = {
 
         this.buffers[this.liveBufferIndex].hide();
         this.buffers[this.liveBufferIndex].pause();
-        this.buffers[this.liveBufferIndex].resetTimer();
+        this.timer.resetTimer();
         this.buffers[nextBufferIndex].show();
 
         this.lastBufferIndex = this.liveBufferIndex;
@@ -102,11 +105,12 @@ Display.prototype = {
 
         liveBuffer.show();
         liveBuffer.play();
-        liveBuffer.setTimerDuration(liveBuffer.duration);
+        this.timer.setTimerDuration(liveBuffer.duration);
 
         // Give the CSS a moment to propagate
+        var _this = this;
         setTimeout(function startTimerAfterDuration() {
-            liveBuffer.startTimer();
+            _this.timer.startTimer();
         }, 50);
 
         // Schedule rotation and the next play event

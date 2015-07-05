@@ -8,14 +8,17 @@
         <script src="src/MediaMetadata.js"></script>
         <script src="src/Buffer.js"></script>
         <script src="src/CircularArray.js"></script>
+        <script src="src/Timer.js"></script>
     </head>
     <body>
         <div id="rootContainer"></div>
+        <div id="timerDiv" class="timer"></div>
     </body>
     <script>
         var display = new Display();
         display.allMedia = mediaMetadata;
         display.recentMediaIndices = new CircularArray(20);
+        display.timer = new Timer("timerDiv");
         display.addNewBuffersToParentDiv(2, "rootContainer");
         display.populateAllBuffersWithRandomMedia();
         display.play();

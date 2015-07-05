@@ -55,7 +55,6 @@ Buffer.prototype = {
         $("#" + parentDivId).append('<div class="contentBuffer" id="' + this.id + '" />');
         $("#" + this.id).append('<img src="" id="' + this.imageId + '" />');
         $("#" + this.id).append('<video id="' + this.videoId + '" />');
-        $("#" + this.id).append('<div class="timer" id="' + this.timerId + '" />');
 
         // Pre-populate the div's video element with a hot-swappable <source> object
         $("#" + this.videoId).append('<source src="" type="' + this.VIDEO_FILE_TYPE + '" >');
@@ -87,7 +86,6 @@ Buffer.prototype = {
         }
 
         this.duration = media.duration;
-        this.setTimerDuration(this.duration);
     },
 
     show: function() {
@@ -116,27 +114,5 @@ Buffer.prototype = {
     pause: function() {
         if (this.type == this.TYPE_VIDEO)
             $("#" + this.videoId).get(0).pause();
-    },
-
-    // CSS3 animation is used to operate the timer visual
-    setTimerDuration: function(duration) {
-        $("#" + this.timerId).css({
-            "-webkit-transition": "width " + duration + "s, -webkit-transform",
-            "transition": "width " + duration + "s, transform " + duration + "s"
-        });
-    },
-
-    startTimer: function() {
-        $("#" + this.timerId).css({
-            "width": "0px"
-        });
-    },
-
-    resetTimer: function() {
-        $("#" + this.timerId).css({
-            "-webkit-transition": "width 0s, -webkit-transform",
-            "transition": "width 0s, transform 0s",
-            "width": "100%"
-        });
     }
 }

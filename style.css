@@ -39,8 +39,7 @@ img {
 }
 
 .timer {
-    position: relative;
-    bottom: 10px;
+    bottom: 0px;
     height: 5px;
     width: 100%;
 
