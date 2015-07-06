@@ -29,26 +29,69 @@
                 Source available on <a class="homeLink" href="http://github.com/kevinmcvey/Curated-Snaps">Github</a>
             </div>
         </div>
+        <div id="mobileWarning" class="initializeHidden thickBorder">
+            <center>
+                <div class="aboutTitle">Whoa there!</div>
+            </center>
+            <div class="aboutText">
+                <strong>Curated Snaps</strong> is a multimedia intensive project. If you're using a mobile device on a 3G/4G connection with limited data, this might unfairly hog your monthly bandwidth.<br /><br />If you've got access to WiFi, I'd recommend switching to that. :)
+            </div>
+            <br /><br />
+            <div id="warningOkay" class="warnButton thickBorder" onclick="warningOkay()">
+                <div class="warnButtonText">
+                    <strong>Everything is fine</strong>
+                </div>
+            </div>
+            <a href="http://www.sometimesredsometimesblue.com/" style="text-decoration: none">
+            <div id="warningNotOkay" class="warnButton thickBorder">
+                <div class="warnButtonText">
+                    <strong>Oh dear, I should leave</strong>
+                </div>
+            </div>
+            </a>
+        </div>
     </body>
     <script>
+        var display;
         var BUFFER_COUNT = 2;       /* Increase to pre-load more media at cost of framerate */
         var REPLAY_ARRAY_SIZE = 20; /* Increase to load a more unique playback order (fewer repeats) */
 
-        var display = new Display();
-        display.allMedia = mediaMetadata; /* Magic value defined in MediaMetadata.js */
-        display.recentMediaIndices = new CircularArray(REPLAY_ARRAY_SIZE);
-        display.timer = new Timer("timerDiv");
-        display.addNewBuffersToParentDiv(BUFFER_COUNT, "rootContainer");
-        display.populateAllBuffersWithRandomMedia();
-        display.play();
+        var MOBILE_USER_AGENT_REGEX = /Mobi/;
+        var safeToLaunch = true;
 
-        window.onresize = function windowOnResize() {
-            display.redrawLiveBuffer();
+        /* Mobile users with limited monthly bandwidth may get hit pretty hard by this project.
+         * The following displays a safeguard prompt if a user visits with a Mobile user-agent. */
+        if (navigator.userAgent.match(MOBILE_USER_AGENT_REGEX)) {
+            safeToLaunch = false;
+            $("#mobileWarning").toggle();
+        }
+
+        function launch() {
+            display = new Display();
+            display.allMedia = mediaMetadata; /* Magic value defined in MediaMetadata.js */
+            display.recentMediaIndices = new CircularArray(REPLAY_ARRAY_SIZE);
+            display.timer = new Timer("timerDiv");
+            display.addNewBuffersToParentDiv(BUFFER_COUNT, "rootContainer");
+            display.populateAllBuffersWithRandomMedia();
+            display.play();
+
+            window.onresize = function windowOnResize() {
+                display.redrawLiveBuffer();
+            }
+        }
+
+        function warningOkay() {
+            $("#mobileWarning").hide();
+            launch();
         }
 
         function toggleAbout() {
             $("#aboutContainer").toggle();
             display.toggle();
         }
-    </script>
+
+        if (safeToLaunch) {
+            launch();
+        }
+     </script>
 </html>
