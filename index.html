@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Curated Snapchats</title>
+        <title>Curated Snaps</title>
         <link rel="stylesheet" type="text/css" href="style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="src/Display.js"></script>
@@ -19,15 +19,26 @@
             </div>
         </div>
         <div id="aboutContainer" class="initializeHidden thickBorder">
-            asdf
+            <center>
+                <div class="aboutTitle">Curated Snaps</div>
+                <div class="aboutSubtitle"> - <a class="homeLink" href="#">Kevin McVey</a></div>
+            </center>
+            <div class="aboutText">
+                <strong>a.</strong> A collection of snaps across my "phases" on the popular ephemeral social network, or rather the ones I thought to save before sending.<br /><br />
+                <strong>b.</strong> Experiments in marrying modern art and social media.<br /><br />
+                Source available on <a class="homeLink" href="http://github.com/kevinmcvey/Curated-Snaps">Github</a>
+            </div>
         </div>
     </body>
     <script>
+        var BUFFER_COUNT = 2;       /* Increase to pre-load more media at cost of framerate */
+        var REPLAY_ARRAY_SIZE = 20; /* Increase to load a more unique playback order (fewer repeats) */
+
         var display = new Display();
-        display.allMedia = mediaMetadata;
-        display.recentMediaIndices = new CircularArray(20);
+        display.allMedia = mediaMetadata; /* Magic value defined in MediaMetadata.js */
+        display.recentMediaIndices = new CircularArray(REPLAY_ARRAY_SIZE);
         display.timer = new Timer("timerDiv");
-        display.addNewBuffersToParentDiv(2, "rootContainer");
+        display.addNewBuffersToParentDiv(BUFFER_COUNT, "rootContainer");
         display.populateAllBuffersWithRandomMedia();
         display.play();
 
