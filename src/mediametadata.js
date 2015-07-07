@@ -7,7 +7,8 @@ mediaMetadata = [
     {
         "source": "media/002.mp4",
         "type": "video",
-        "duration": 9
+        "duration": 9,
+        "transform": "rotate(90deg) scale(0.5625)"
     },
     {
         "source": "media/003.png",
@@ -62,7 +63,8 @@ mediaMetadata = [
     {
         "source": "media/013.mp4",
         "type": "video",
-        "duration": 9
+        "duration": 9,
+        "transform": "rotate(90deg) scale(0.5625)"
     },
     {
         "source": "media/014.jpg",
@@ -97,7 +99,8 @@ mediaMetadata = [
     {
         "source": "media/020.mp4",
         "type": "video",
-        "duration": 9
+        "duration": 9,
+        "transform": "rotate(-90deg) scale(0.5625)"
     },
     {
         "source": "media/021.jpg",
@@ -137,12 +140,8 @@ mediaMetadata = [
     {
         "source": "media/028.mp4",
         "type": "video",
-        "duration": 9
-    },
-    {
-        "source": "media/029.mp4",
-        "type": "video",
-        "duration": 10
+        "duration": 9,
+        "transform": "rotate(-90deg) scale(0.5625)"
     },
     {
         "source": "media/031.jpg",
@@ -162,12 +161,8 @@ mediaMetadata = [
     {
         "source": "media/035.mp4",
         "type": "video",
-        "duration": 4
-    },
-    {
-        "source": "media/036.mp4",
-        "type": "video",
-        "duration": 7
+        "duration": 4,
+        "transform": "rotate(90deg) scale(0.5625)"
     },
     {
         "source": "media/037.jpg",

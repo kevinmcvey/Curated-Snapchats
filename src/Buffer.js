@@ -80,9 +80,22 @@ Buffer.prototype = {
             this.type = this.TYPE_VIDEO;
             $("#" + this.videoId).get(0).src = media.source;
 
+            /* Ugly, irritating, "code smell"
+             * Rotates the buffer when certain browsers ignore <video> orientation metadata */
+            var _this = this;
+            $("#" + _this.videoId).bind("loadedmetadata", function() {
+                if ($("#" + _this.videoId).get(0).videoWidth > $("#" + _this.videoId).get(0).videoHeight) {
+                    $("#" + _this.id).css({"transform": media.transform});
+                }
+            });
+
         } else if (media.type == this.TYPE_IMAGE) {
             this.type = this.TYPE_IMAGE;
             $("#" + this.imageId).get(0).src = media.source;
+        }
+
+        if (media.transform === undefined) {
+            $("#" + this.id).css({"transform": ""});
         }
 
         this.duration = media.duration;
