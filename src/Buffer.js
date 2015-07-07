@@ -85,7 +85,7 @@ Buffer.prototype = {
             var _this = this;
             $("#" + _this.videoId).bind("loadedmetadata", function() {
                 if ($("#" + _this.videoId).get(0).videoWidth > $("#" + _this.videoId).get(0).videoHeight) {
-                    $("#" + _this.id).css({"transform": media.transform});
+                    $("#" + _this.id).css({"transform": `rotate(${media.rotate}deg) scale(${media.scale})`});
                 }
             });
 
