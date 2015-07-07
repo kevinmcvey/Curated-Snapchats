@@ -122,7 +122,12 @@ Buffer.prototype = {
     play: function() {
         if (this.type == this.TYPE_VIDEO) {
             $("#" + this.videoId).get(0).play();
-            $("#" + this.videoId).get(0).currentTime = 0;
+
+            // Have to perform on loadedmetadata event for compatibility
+            var _this = this;
+            $("#" + this.videoId).bind("loadedmetadata", function() {
+                $("#" + _this.videoId).get(0).currentTime = 0;
+            });
         }
     },
 
