@@ -28,9 +28,7 @@ Buffer.prototype = {
     duration: 0,
 
     isExistantDiv: function(divId) {
-        if ($("#" + divId).length !== 0)
-            return true;
-        return false;
+        return $("#" + divId).length !== 0;
     },
 
     // Create the buffer
@@ -104,17 +102,19 @@ Buffer.prototype = {
     show: function() {
         $("#" + this.id).show();
 
-        if (this.type == this.TYPE_VIDEO)
+        if (this.type == this.TYPE_VIDEO) {
             $("#" + this.videoId).show();
-        else if (this.type == this.TYPE_IMAGE)
+        } else if (this.type == this.TYPE_IMAGE) {
             $("#" + this.imageId).show();
+        }
     },
 
     hide: function() {
-        if (this.type == this.TYPE_VIDEO)
+        if (this.type == this.TYPE_VIDEO) {
             $("#" + this.videoId).hide();
-        else if (this.type == this.TYPE_IMAGE)
+        } else if (this.type == this.TYPE_IMAGE) {
             $("#" + this.imageId).hide();
+        }
 
         $("#" + this.id).hide();
     },
@@ -132,7 +132,8 @@ Buffer.prototype = {
     },
 
     pause: function() {
-        if (this.type == this.TYPE_VIDEO)
+        if (this.type == this.TYPE_VIDEO) {
             $("#" + this.videoId).get(0).pause();
+        }
     }
 }
